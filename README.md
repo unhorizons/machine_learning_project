@@ -44,10 +44,10 @@ Ce projet demande la maîtrise de certain notions mathématique et statistiques 
 -  Convexité
 - Dérivée
 - Gradient, Hessien, Jacobien
-- Régression Linéaire
+- Régression Linéaire (facultatif: régression logistique)
 - Classifiction Linéaire (pas trop mathématique)
 - Erreur quadratique moyenne
-- Moindres carrés linéaires
+- Moindres carrés linéaires (facultatif : moindres carrés ordinaires)
 - Descente de gradient
 - Optimisation stochastique (pour les notions trés avancées)
 - Etc.
