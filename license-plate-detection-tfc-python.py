@@ -1,6 +1,9 @@
 # %% [markdown]
 # ## Import Libaries
-# - 
+# - `keras` comes with `tensorflow`
+# - `sklearn`
+# - `numpy`
+# - `matplotlib`
 
 # %%
 import pandas as pd
@@ -21,6 +24,11 @@ from keras.layers import Dense, Flatten, Dropout
 from keras.applications.vgg19 import VGG19
 from keras.applications.vgg16 import VGG16
 from keras.applications.resnet_v2 import ResNet50V2
+
+import keras.optimizers as  optimizers
+import keras.losses as losses
+
+from alpr_lib import AlprTrainer as trainer
 
 import easyocr
 
@@ -45,6 +53,7 @@ for dirName, _, fileNames in os.walk('dataset/input'):
 # Extraire les informations
 # - Les images seront stocker dans une liste `X` 
 # - Les coordonnées seront extrait des annotations (étiquettes) et stocker dans un vecteur `y = [vx,vy]`
+# Note: <i>avec`vx` pour vecteur x et `vy` pour vecteur y, le vecteur x et y contiennent 2 valeur (min et max)</i>
 # 
 # |  vx  |  vy  |
 # |------|------|
@@ -73,8 +82,12 @@ for f1 in files:
 # %% [markdown]
 # #### Extraction des coordonnées (dans les annotations)
 
+# %% [markdown]
+# La fonction `resizeannotation` permet d'extraire les cordonnées de la region d'intérêt d'une images
+# et les retourne sous dans une liste :  [`ymin`, `ymax`, `xmin`, `xmax`]
+
 # %%
-def resizeannotation(f):  # Fonction qui va extraire les informations des fichiers xml
+def resizeannotation(f) -> list:  # Fonction qui va extraire les informations des fichiers xml
     tree = etree.parse(f)
     for dim in tree.xpath("size"):
         width = int(dim.xpath("width")[0].text)
@@ -96,7 +109,10 @@ for i in text_files:
 
 # %%
 #for img in text_files: print(img)
-for img in X: print(img)
+
+## uncomment to print all images pixel in X
+
+#for img in X: print(img)
 
 # %% [markdown]
 # ## Afficher les images du dataset (Display Image Dataset)
@@ -116,9 +132,33 @@ for index, i in enumerate(sample_index):
 # %% [markdown]
 # ## Verifier la taille des images
 
+# %% [markdown]
+# - ${X}$ : 433 images de tailles 200x200 pixel en couleur dimension 3 <=> (red, green, bleu) 
+# - ${y}$ : 433 annotations decrivant chaque region intérêt, dimesion 4 <=> [`ymin`, `ymax`, `xmin`, `xmax`]
+# 
+# Exemple :
+# 
+# Le modèle linéaire qu'ont peut en tirer, s'il était question d'une regression linéaire :<br>
+# <b>Généraliste</b> :
+# - ${ y =Xw + \varepsilon} $ avec ${w}$ le vecteur des paramètres aléatoire attribué par le CNN, qu'il faudra entrainé ensuite. 
+# - ${ \hat{y} =X\hat{w}} $ avec $\hat{w}$ le vecteur des paramètres après entrainement du CNN <br>
+# <b>Itérative</b> : ${ \hat{y}_{i}=w_{0}+w_{1}x_{i,1}+\ldots + w_{n}x_{i,n}+\varepsilon_{i}}$ 
+# 
+# Aprés il faudra faire la minimisation de la <i>somme des carrés des écarts ${MSE}$</i> entre les valeurs prédites ${\hat{y}}$  et les valeurs observées ${y}$ par rapport au vecteur paramètre ${w}$ : ${{\hat {\varepsilon }}=y-{\hat {y}}}.$
+# <b>Itérative</b> :
+# $${\ \mathrm {MSE} = {\hat {\varepsilon }}=\sum _{i=1}^{n}(y_{i}-{\hat {y_{i}}})^{2}}$$
+# 
+# Le objectif de cette régression est d'établir un modèle y = ƒ(x). Une fois ce modèle estimée, on va chercher à prédire une valeur de `y` pour une valeur de `x` donnée.
+# - avec `y` : <i>region intérêt ou plaque d'immatriculation</i> et `x` : <i>images</i>    
+# 
+# Fin Exemple;
+# 
+# Note : pour ce projet il s'agit d'une classification à une seule classe. 
+
 # %%
+# verificarion la taille des images
 print(f"X Shape : {np.array(X).shape}")
-print(f"y Shape : {np.array(y).shape}")
+print(f"y Shape : {np.array(y).shape}") 
 
 # %% [markdown]
 # ## Afficher les images du dataset avec leurs annotations (région d'interêt) 
@@ -163,14 +203,12 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 # %%
 model = Sequential()
 model.add(VGG19(weights="imagenet", include_top=False, input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3)))
-# Flatten Layer
+
 model.add(Flatten())
 model.add(Dropout(0.4))
-# Hidden Deep Layer
 model.add(Dense(256, activation="relu"))
 model.add(Dense(128, activation="relu"))
 model.add(Dense(64,  activation="relu"))
-# Output
 model.add(Dense(4,   activation="sigmoid"))
 
 model.layers[-7].trainable = False
@@ -178,30 +216,37 @@ model.layers[-7].trainable = False
 model.summary()
 
 # %% [markdown]
-# ## Entrainement du modèle VGG19 (Model Training (VGG19))
+# ## Entrainement du modèle VGG19, 
 # 
 # - Loss fonction : MSE (mean square error)
 # - Optimizer : ADAM (a gradiant descent stochastic)
 # 
 
 # %%
-model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
+#model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
 
-history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200, batch_size=32, verbose=1)
+model.compile(loss=losses.mean_squared_error(), optimizer = optimizers.Adam(), metrics=['accuracy'])
+history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200, batch_size=32, verbose=1) # training
 
 # %% [markdown]
 # ## Evaluation 
+
+# %% [markdown]
+# Illustration de la minimisation de l'erreur (loss) par rapport au temps (mesuré en epoch)
 
 # %%
 #plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
 
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
-plt.title('Courbes de la fonction perte de l\'entrainement et de validation') #('Training and validation loss curves (VGG19)')
+plt.title('Courbes de l\'entrainement et de validation') #('Training and validation loss curves (VGG19)')
 plt.ylabel('perte (loss)')
 plt.xlabel('pas (epoch)')
 plt.legend(['entrainement', 'validation'], loc='upper right')
 plt.show()
+
+# %% [markdown]
+# Illustration de l'évolution de la précision (accuracy) du model,
 
 # %%
 plt.plot(history.history['accuracy'])
@@ -248,19 +293,13 @@ plt.show()
 # %% [markdown]
 # # FIN du code
 
-# %%
-reader = easyocr.Reader(['en'],gpu=False) # this needs to run only once to load the model into memory
-result = reader.readtext(src_path + '/images/Cars4.png')
-#for img in img_list: print(img)
-result
-
 # %% [markdown]
 # 
 
 # %% [markdown]
 # 
 # ### La suite 
-# Juste après aussi implémenter le VGG16 pour voir ses performances équivalent VGG19.
+# Juste après aussi implémenter le VGG16 pour voir si ses performances équivalent VGG19.
 # 
 # Enfin faire l’étude comparative de différent optimiseur : ADAM, ADADELTA, NAG, Momentum, RMSprop,
 
