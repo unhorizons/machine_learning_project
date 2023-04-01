@@ -66,6 +66,12 @@ before install, update pip : `pip install --upgrade pip`
 
 if you're using Anaconda check [this](https://www.tensorflow.org/install/pip), explain how to install tensorflow on it.
 
+<br>
+<br>
+<br>
+
+### Note : <i>only the main file `license-plate-detection-tfc1.py` which is completely commented for the other file understanding can be deduced from it.e</i>.
+
 
 
 
