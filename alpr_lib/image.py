@@ -9,11 +9,11 @@ class ImageData:
         
         self.index = 0
 
-    def byte(self):
+    def byte(self) -> float:
         return self.byte
-    def index(self):
+    def index(self) -> int:
         return self.index
-    def set_index(self, index):
+    def set_index(self, index) -> None :
         self.index = index
     def size (self):
         return self.byte.shape()

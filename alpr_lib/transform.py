@@ -6,7 +6,7 @@ class ImageTransformation:
     def __init__(self, img_path):
         self.img_path = img_path
 
-    def rotate(self, show = True , write=False):
+    def rotate(self, show = True , write=False) -> None:
         # Reading the image
         image = self.img_path #= cv2.imread(self.img_path)
 
@@ -29,10 +29,10 @@ class ImageTransformation:
             # save the rotated image to disk
             cv2.imwrite('rotated_image.jpg', rotated_image)
 
-    def translate(self, show = True , write=False):
+    def translate(self, show = True , write=False) -> None:
         pass
 
-    def crop(self,resize, show = True , write=False):
+    def crop(self,resize, show = True , write=False) -> None:
         xy = resize
         img = cv2.imread(self.img_path)
         print(f"image shape : {img.shape}") # Print image shape
@@ -48,7 +48,7 @@ class ImageTransformation:
             # Save the cropped image
             cv2.imwrite("Cropped Image.jpg", cropped_image)
 
-    def flip_image(self,show = True , write=False):
+    def flip_image(self,show = True , write=False) -> None:
         img = cv.imread(self.img_path, cv.IMREAD_COLOR)
         cv.imshow('input', img)
         #  Flip up and down 
@@ -70,7 +70,7 @@ class ImageTransformation:
         #return imaf
 
     
-    def rotate_image(self):
+    def rotate_image(self) -> None :
         """
         Rotated image , Introduce two rotation modes .
         1、 Specific angle rotation function , But only support 90、180、270 Rotate at such a special angle .

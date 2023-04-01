@@ -30,7 +30,11 @@ class AlprTrainer:
         self.optimizer = optimizer
         self.loss = optimizer
         self.model = None
-    def create_vgg19_model(self, loss='mean_squared_error' , optimizer=optimizers.Adam(), metrics=['accuracy']):
+    def create_vgg19_model(
+        self, 
+        loss='mean_squared_error', 
+        optimizer=optimizers.Adam(), 
+        metrics=['accuracy']) -> Sequential:
         
         model = Sequential()
         model.add(VGG19(weights="imagenet", include_top=False, input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3)))
@@ -50,7 +54,7 @@ class AlprTrainer:
         
         return self.model
      
-    def save_model(self,name, format='h5'):
+    def save_model(self,name, format='h5') -> None:
         #!mkdir -p saved_model
         self.model.save(f'saved_model/{name}.h5')
         
