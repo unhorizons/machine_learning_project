@@ -70,7 +70,7 @@ if you're using Anaconda check [this](https://www.tensorflow.org/install/pip), e
 <br>
 <br>
 
-### Note : <i>only the main file `license-plate-detection-tfc1.py` which is completely commented for the other file understanding can be deduced from it.e</i>.
+### Note : <i>Only the main `license-plate-detection-tfc1.py` file which is fully commented. Understanding of other files can be inferred from this one</i>.
 
 
 
