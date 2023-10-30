@@ -1,4 +1,4 @@
-# automatic license plate recognition using stochastic gradient descent  .
+# Automatic license plate recognition using stochastic gradient descent
 ## (La reconnaissance des plaques d'immatriculation pour la descente de gradient stochastique)
 
 
