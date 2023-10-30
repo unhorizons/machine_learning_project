@@ -1,5 +1,5 @@
-# Study of the best stochastic gradient descent optimizer for automatic license plate recognition.
-## (Etude du meilleur optimiseur de descente de gradient stochastique pour la reconnaissance des plaques d'immatriculation)
+# automatic license plate recognition using stochastic gradient descent  .
+## (La reconnaissance des plaques d'immatriculation pour la descente de gradient stochastique)
 
 
 C'est projet une étude comparatif des différents [optimizers]() axés sur la [descente de gradient stochastique](https://scikit-learn.org/stable/modules/sgd.html) qui permet d’ajuster le classificateur d’images sous une fonction coût convexe,  
