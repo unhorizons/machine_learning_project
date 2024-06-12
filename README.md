@@ -1,6 +1,6 @@
 # Automatic license plate recognition using stochastic gradient descent
 ## (La reconnaissance des plaques d'immatriculation pour la descente de gradient stochastique)
-
+<i style="color: red;">Desolé pour l'anglisme, c'est juste quelques mots en anglais, pas beaucoup ツ  </i>  
 
 C'est projet une étude comparatif des différents [optimizers]() axés sur la [descente de gradient stochastique](https://scikit-learn.org/stable/modules/sgd.html) qui permet d’ajuster le classificateur d’images sous une fonction coût convexe,  
 
@@ -37,15 +37,15 @@ Ce projet ne fait pas du OCR (Optical Character Recognition), la reconnaissance 
 
 ## Math 
 
-Ce projet demande la maîtrise de certain notions mathématique et statistiques (pas obligatoire) :
+Ce projet demande la maîtrise des certains notions mathématique et statistiques (pas obligatoire, on peut faire sans, mais si vous etes curieux et voulez maitriser le sujet **here you are**) :
 
 - Matrices et Vecteurs (une image peut être représenté dans une matrices)
 - Convolution d’une matrice
--  Convexité
+- Convexité
 - Dérivée
 - Gradient, Hessien, Jacobien
 - Régression Linéaire (facultatif: régression logistique)
-- Classifiction Linéaire (pas trop mathématique)
+- Classifiction Linéaire (pas trop des mathématique, plus proba)
 - Erreur quadratique moyenne
 - Moindres carrés linéaires (facultatif : moindres carrés ordinaires)
 - Descente de gradient
@@ -66,14 +66,6 @@ before install, update pip : `pip install --upgrade pip`
 
 if you're using Anaconda check [this](https://www.tensorflow.org/install/pip), explain how to install tensorflow on it.
 
-<br>
-<br>
-<br>
-
-### Note : <i>Only the main `license-plate-detection-tfc1.py` file which is fully commented. Understanding of other files can be inferred from this one</i>.
-
-
-A short description of the project.
 
 ## Project Organization
 
@@ -110,7 +102,7 @@ A short description of the project.
 │
 └── src                <- Source code for use in this project.
     │
-    ├── __init__.py    <- Makes ml_project_ a Python module
+    ├── __init__.py    <- Makes src a Python module
     │
     ├── data           <- Scripts to download or generate data
     │   └── make_dataset.py
@@ -126,7 +118,11 @@ A short description of the project.
     └── visualization  <- Scripts to create exploratory and results oriented visualizations
         └── visualize.py
 ```
+<br>
+<br>
+<br>
 
+### Note : <i>Only the main `license-plate-detection-tfc1.py` file which is fully commented. Understanding of other files can be inferred from this one</i>.
 
 
 
