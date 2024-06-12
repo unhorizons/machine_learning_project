@@ -108,7 +108,7 @@ A short description of the project.
 │
 ├── setup.cfg          <- Configuration file for flake8
 │
-└── ml_project_                <- Source code for use in this project.
+└── src                <- Source code for use in this project.
     │
     ├── __init__.py    <- Makes ml_project_ a Python module
     │
