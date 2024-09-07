@@ -19,9 +19,9 @@ Les optimizers a comparé:
 
 This paper ([here](https://arxiv.org/pdf/1609.04747)) explains more about optimizers.
 
-## Le Model CNN 
+## Le CNN Model 
 
-Le Model CNN utilisé ici c’est le VGG16 (et VGG16).
+Le CNN Model utilisé ici c’est le VGG16 (et VGG16).
 
 VGG signifie Visual Geometry Group. Il s'agit d'une architecture standard de réseau de neurones à convolution profonde (CNN) à plusieurs couches. Le "profond" fait référence au nombre de couches avec VGG-16 ou VGG-19 consistant respectivement en 16 et 19 couches convolutionnelles. L'architecture VGG est à la base de modèles de reconnaissance d'objets révolutionnaires (this paper [here](https://www.researchgate.net/profile/Srikanth-Tammina/publication/337105858_Transfer_learning_using_VGG-16_with_Deep_Convolutional_Neural_Network_for_Classifying_Images/links/5dc94c3ca6fdcc57503e6ad9/Transfer-learning-using-VGG-16-with-Deep-Convolutional-Neural-Network-for-Classifying-Images.pdf?_sg%5B0%5D=started_experiment_milestone&origin=journalDetail&_rtd=e30%3D) talk more about).
 
@@ -41,7 +41,7 @@ Ce projet demande la maîtrise de certain notions mathématique et statistiques 
 
 - Matrices et Vecteurs (une image peut être représenté dans une matrices)
 - Convolution d’une matrice
--  Convexité
+- Convexité
 - Dérivée
 - Gradient, Hessien, Jacobien
 - Régression Linéaire (facultatif: régression logistique)
@@ -58,10 +58,10 @@ before install, update pip : `pip install --upgrade pip`
 
 - tensorflow : `pip install tensorflow`
 - opencv : `pip install opencv-python`
-- sklearn
-- numpy
-- matplotlib
-- lxml
+- sklearn `pip install sk-learn`
+- numpy `pip install numpy`
+- matplotlib `pip install matplotlib`
+- lxml  `pip install lxml`
 
 
 if you're using Anaconda check [this](https://www.tensorflow.org/install/pip), explain how to install tensorflow on it.
